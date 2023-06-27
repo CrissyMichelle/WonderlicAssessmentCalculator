@@ -1,0 +1,118 @@
+body {
+    background-color: black;
+}
+
+#main {
+    font-family: "Raleway", Arial, Helvetica, sans-serif;
+    background-color: #e0e0e0;
+    padding: 0px;
+    margin: 0;
+    border: none;
+    text-align:center;
+}
+
+img.center {
+    display: block;
+    height:250px; 
+    width:200px;
+    margin-left: auto;
+    margin-right:auto;
+}
+
+.header {
+    font-family: "Raleway", Arial, Helvetica, sans-serif;
+    color: aliceblue;
+    background-color: #3b3b4f;
+    text-align: center;
+}
+
+.messages {
+    background-color: red;
+    color: white;
+}
+
+div {
+    display: flex;
+}
+
+
+form {
+    font-family: "Raleway", Arial, Helvetica, sans-serif;
+    background-color: #e0e0e0;
+    margin: .1em 40% 1em 10%;
+    text-align: center;
+    border: none;
+    padding-top: .1em;
+    border-bottom: 3px solid #3b3b4f;
+}
+
+label {
+    font-family: 'ZCOOL QingKe HuangYou', monospace;
+    display: block;
+    margin: 0.5rem 0;
+}
+
+input {
+    margin: .1e 0 20px 0;
+    width: 90%;
+    min-height: 2em;
+    border: 1px solid #0a0a23;
+}
+
+hr {
+    margin-top: 0
+}
+
+button {
+    display: block;
+    color: white;
+    width: 60%;
+    min-width: 300px;
+    margin: auto;
+    margin-bottom: 1em;
+    height: 2em;
+    font-size: 1.1rem;
+    background-color: #3b3b4f;
+    border-radius: 10%;
+    border-color: white;
+}
+
+i, ul {
+    font-family: 'ZCOOL QingKe HuangYou', monospace;
+    background-color: #e0e0e0;
+    padding: 0px;
+    margin: 0;
+    border: none;
+    text-align:left;
+    font-size: 1em;
+}
+
+li, p {
+    font-family: "Raleway", Arial, Helvetica, sans-serif;
+    background-color: white;
+    padding: 10px;
+    margin: 0;
+    border: none;
+    text-align:center;
+}
+
+.columnL {
+    float: right;
+    width: 50%;
+    text-align: left;
+    justify-content: right;
+}
+
+.columnR {
+    float: right;
+    width: 50%;
+    text-align: center;
+}
+  
+  /* Clear floats after the columns */
+.row:after {
+    content: "";
+    display: table;
+    clear: both;
+    
+}

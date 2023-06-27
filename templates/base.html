@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Sort and Question{% endblock %}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway|ZCOOL+QingKe+HuangYou">
+    <link rel="stylesheet" href="static/style.css" type="text/css">
+</head>
+<body>
+    <div id="main">
+        <h1>25ID, Lightning Labs<br/>Wonderlic Assesment Assistant!</h1>
+        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/25th_Infantry_Division_shoulder_sleeve_insignia.png" 
+        alt="25ID Tropic Lightning Logo" class="center">
+    </div>
+    {% block content %}
+    <h2 class="header">Input Scores. Click for bb card stuff!</h2>
+    <section class="messages">
+        {% for msg in get_flashed_messages() %}
+        <div>{{ msg }}</div>
+        {% endfor %}
+    </section>
+    <form action="/generated" method="POST">
+        <h3 class="header">Motivation</h3>
+        <label for="motivation">Motivation Score </label><input type="text" placeholder="type in a number from 0 to 100" name="motivation"><br>
+        <hr>
+        <h3 class="header">Personality Scores</h3>
+        <label for="depend">Dependability* </label><input type="text" placeholder="type in a number from 0 to 100" name="depend"><br>
+        <label for="stress">Stress Tolerance* </label><input type="text" placeholder="type in a number from 0 to 100" name="stress"><br>
+        <label for="cooperate">Cooperation* </label><input type="text" placeholder="type in a number from 0 to 100" name="cooperate"><br>
+        <label for="social">Sociability* </label><input type="text" placeholder="type in a number from 0 to 100" name="social"><br>
+        <label for="openmind">Open-Mindedness* </label><input type="text" placeholder="type in a number from 0 to 100" name="openmind"><br>
+        <hr>
+        <button type="submit">Generate</button>
+    </form>
+    <h2 class="header">Question Bank</h2> 
+    <section class="questionBank">
+        <ul>Dependability (Conscientiousness)</ul>
+            <li><i>75 and above</i></li>
+            {% for strong in question_bank_1S %}
+            <li>{{ strong }}</li>
+            {% endfor %}
+            <li><i>25 and below</i></li>
+            {% for weak in question_bank_1W %}
+            <li>{{ weak }}</li>
+            {% endfor %} <br>
+        <ul>Stress Tolerance (Neuroticism)</ul>
+            <li><i>75 and above</i></li>
+            {% for strong in question_bank_2S %}
+            <li>{{ strong }}</li>
+            {% endfor %}
+            <li><i>25 and below</i></li>
+            {% for weak in question_bank_2W %}
+            <li>{{ weak }}</li>
+            {% endfor %} <br>
+        <ul>Cooperation (Agreeableness)</ul>
+            <li><i>75 and above</i></li>
+            {% for strong in question_bank_3S %}
+            <li>{{ strong }}</li>
+            {% endfor %}
+            <li><i>25 and below</i></li>
+            {% for weak in question_bank_3W %}
+            <li>{{ weak }}</li>
+            {% endfor %} <br>
+        <ul>Sociability (Extroversion)</ul>
+            <li><i>75 and above</i></li>
+            {% for strong in question_bank_4S %}
+            <li>{{ strong }}</li>
+            {% endfor %}
+            <li><i>25 and below</i></li>
+            {% for weak in question_bank_4W %}
+            <li>{{ weak }}</li>
+            {% endfor %} <br>
+        <ul>Open-Mindedness (Openeness)</ul>
+            <li><i>75 and above</i></li>
+            {% for strong in question_bank_5S %}
+            <li>{{ strong }}</li>
+            {% endfor %}
+            <li><i>25 and below</i></li>
+            {% for weak in question_bank_5W %}
+            <li>{{ weak }}</li>
+            {% endfor %}
+    </section>
+    {% endblock %}
+</body>
+</html>

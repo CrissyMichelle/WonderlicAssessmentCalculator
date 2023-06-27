@@ -1,0 +1,38 @@
+<!--This template inherits from the homepage-->
+{% extends 'base.html' %}
+{% block title %}Labeled_Scores_and_RecommendedQuestions{% endblock %}
+<!--Insert the newly converted amount into h2 here-->
+{% block content %}
+    <h2 class="header">Labeled scores</h2>
+    
+    <div class="row" > 
+        <div class="columnL">
+            <p>
+                {% for cat in label_data %}
+                    {{ cat }}&nbsp;&nbsp; &nbsp;&nbsp; <i>{{ label_data[cat] }}</i> 
+                    <br>
+                {% endfor %}
+            </p>
+        </div>  
+        
+        <div class="columnR">
+            <p>
+                {% for score in scores %} 
+                    {{ score }}
+                    <br>
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+
+     
+    <h2 class="header">Recommended questions</h2>
+    <p><i>weak category</i></p>
+        {% for question in questionsW %}
+        <p>{{ question }}</p>
+        {% endfor %}
+    <p><i>strong category</i></p>
+        {% for question in questionsS %}
+        <p>{{ question }}</p>
+        {% endfor %}
+{% endblock %}
