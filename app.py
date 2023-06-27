@@ -39,6 +39,9 @@ def handle_form():
     moto_score = request.form["motivation"]
     score_list.append(moto_score)
 
+    overP_score = request.form["overallP"]
+    score_list.append(overP_score)
+
     depend_score = request.form["depend"]
     score_list.append(depend_score)
 
@@ -58,19 +61,25 @@ def handle_form():
     try:
         if valid_input(moto_score, depend_score, stress_score, coop_score, soci_score, open_score) == True:
             moto_cat = label_score(moto_score)
+            overP_cat = label_score(overP_score)
             dep_cat = label_score(depend_score)
             stress_cat = label_score(stress_score)
             coop_cat = label_score(coop_score)
             soci_cat = label_score(soci_score)
             open_cat = label_score(open_score)
             """Put categorical labels data into session storage"""
-            session['labels'] = {'Motivation': moto_cat, 'Dependability': dep_cat, 'Stress Tolerance': stress_cat, 'Cooperation': coop_cat, 
-                                'Sociability': soci_cat, 'Open-Mindedness': open_cat}
+            session['labels'] = {'Motivation': [moto_cat, moto_score], 'Overall Personality': [overP_cat, overP_score], 'Dependability': [dep_cat, depend_score], 'Stress Tolerance': [stress_cat, stress_score], 
+                                 'Cooperation': [coop_cat, coop_score], 'Sociability': [soci_cat, soci_score], 'Open-Mindedness': [open_cat, open_score]}
             """Generate list of questions"""
             weakP = mins_ask_this([depend_score,stress_score,coop_score,soci_score,open_score])
             strongP = max_ask_this([depend_score,stress_score,coop_score,soci_score,open_score])
 
-            return render_template("generated.html", label_data=session['labels'], questionsW = weakP, questionsS = strongP, scores=score_list)
+            return render_template("generated.html", label_data=session['labels'], questionsW = weakP, questionsS = strongP, 
+                                   scores=score_list, question_bank_1S=depend_questions['STRONG'], question_bank_1W=depend_questions['WEAK'],
+                            question_bank_2S=stress_questions['STRONG'], question_bank_2W=stress_questions['WEAK'], 
+                            question_bank_3S=cooperate_questions['STRONG'], question_bank_3W=cooperate_questions['WEAK'], 
+                            question_bank_4S=social_questions['STRONG'], question_bank_4W=social_questions['WEAK'], 
+                            question_bank_5S=openmind_questions['STRONG'], question_bank_5W=openmind_questions['WEAK'])
         else:
             return redirect('/')
     except:

@@ -7,32 +7,27 @@
     
     <div class="row" > 
         <div class="columnL">
-            <p>
+            <p class="scores">
                 {% for cat in label_data %}
-                    {{ cat }}&nbsp;&nbsp; &nbsp;&nbsp; <i>{{ label_data[cat] }}</i> 
+                    {{ cat }}&nbsp;&nbsp; &nbsp;&nbsp; <i>{{ label_data[cat][0] }}</i>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+                    &nbsp;&nbsp; &nbsp;&nbsp;<strong class="num">{{ label_data[cat][1] }}</strong> 
                     <br>
                 {% endfor %}
             </p>
         </div>  
         
-        <div class="columnR">
-            <p>
-                {% for score in scores %} 
-                    {{ score }}
-                    <br>
-                {% endfor %}
-            </p>
-        </div>
     </div>
 
      
     <h2 class="header">Recommended questions</h2>
-    <p><i>weak category</i></p>
+    <section class="questions">
+    <p><i>Weak component</i></p>
         {% for question in questionsW %}
         <p>{{ question }}</p>
         {% endfor %}
-    <p><i>strong category</i></p>
+    <p><i>Strong component</i></p>
         {% for question in questionsS %}
         <p>{{ question }}</p>
         {% endfor %}
+    </section>
 {% endblock %}

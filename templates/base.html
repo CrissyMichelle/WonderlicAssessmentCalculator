@@ -8,10 +8,13 @@
     <link rel="stylesheet" href="static/style.css" type="text/css">
 </head>
 <body>
-    <div id="main">
-        <h1>25ID, Lightning Labs<br/>Wonderlic Assesment Assistant!</h1>
-        <img src="https://upload.wikimedia.org/wikipedia/commons/e/e4/25th_Infantry_Division_shoulder_sleeve_insignia.png" 
-        alt="25ID Tropic Lightning Logo" class="center">
+    <div>
+        <h1 id="main">25ID, Lightning Labs - Wonderlic Assesment Assistant!
+            <img src="static/LL_Logo.jpeg" 
+            alt="25ID Lightning Labs Logo" class="beneath">
+        </h1>
+        
+        
     </div>
     {% block content %}
     <h2 class="header">Input Scores. Click for bb card stuff!</h2>
@@ -24,7 +27,11 @@
         <h3 class="header">Motivation</h3>
         <label for="motivation">Motivation Score </label><input type="text" placeholder="type in a number from 0 to 100" name="motivation"><br>
         <hr>
-        <h3 class="header">Personality Scores</h3>
+        <h3 class="header">Overall Personality Score</h3>
+        <label for="overallP">Overall Personality Score </label><input type="text" placeholder="type in a number from 0 to 100" name="overallP"><br>
+        <hr>
+
+        <h3 class="header"><i id="subHead">Personality Component Scores</i></h3>
         <label for="depend">Dependability* </label><input type="text" placeholder="type in a number from 0 to 100" name="depend"><br>
         <label for="stress">Stress Tolerance* </label><input type="text" placeholder="type in a number from 0 to 100" name="stress"><br>
         <label for="cooperate">Cooperation* </label><input type="text" placeholder="type in a number from 0 to 100" name="cooperate"><br>
@@ -33,6 +40,7 @@
         <hr>
         <button type="submit">Generate</button>
     </form>
+    {% endblock %}
     <h2 class="header">Question Bank</h2> 
     <section class="questionBank">
         <ul>Dependability (Conscientiousness)</ul>
@@ -81,6 +89,5 @@
             <li>{{ weak }}</li>
             {% endfor %}
     </section>
-    {% endblock %}
 </body>
 </html>
