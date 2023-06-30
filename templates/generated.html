@@ -1,25 +1,69 @@
 <!--This template inherits from the homepage-->
 {% extends 'base.html' %}
-{% block title %}Labeled_Scores_and_RecommendedQuestions{% endblock %}
+{% block title %}Won bb Card{% endblock %}
 <!--Insert the newly converted amount into h2 here-->
-{% block content %}
-    <h2 class="header">Labeled scores</h2>
+{% block content %}<h2 class="header">{{ name }}</h2>
+<h3 class="header"><u>Operational Psychologist Feedback</u></h2>
+    <input type="button" onclick="javascript:window.print();" value="Print to PDF"></input>
+<div class="row" > 
+    <div class="columnL">
+        <p class="scores">
+            <b>Cognitive score = {{ cognitive }}</b>
+            <ul><u>Cognitive Score Guide:</u></ul>
+            <li>Below average = candidate scored lowed than peers and may have difficulty with learning and managing problems associated with this job. 
+                Candidate may need additional training or longer time to complete tasks.</li>
+            <li>Average = candidate scored similar to peers; candidate is likely to have the cognitive capacity to learn and problem solve effectively.</li>
+            <li>Above average = candidate scored above peers; candidate is likely to learn the job quickly and be efficient in problem solving/managing tasks.</li>
+        </p>
+    </div>  
     
-    <div class="row" > 
-        <div class="columnL">
-            <p class="scores">
-                {% for cat in label_data %}
-                    {{ cat }}&nbsp;&nbsp; &nbsp;&nbsp; <i>{{ label_data[cat][0] }}</i>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
-                    &nbsp;&nbsp; &nbsp;&nbsp;<strong class="num">{{ label_data[cat][1] }}</strong> 
-                    <br>
-                {% endfor %}
-            </p>
-        </div>  
-        
-    </div>
+</div>
+<div class="row" > 
+    <div class="columnL">
+        <p class="scores">
+            <b>Motivational fit = {{ moto }}</b>
+            <ul><u>Motivational Fit Guide:</u></ul>
+            <li>Weak = unlikely to be motivated by this type of work; interest and work preferences are not likely to align with position. 
+                Candidate is likely to lack motivation for role.</li>
+            <li>Cautionary = less unlikely to be motivated by this type of work; interest and work preferences mostly do not align to position. 
+                Candidate may put in less effort into role.</li>
+            <li>Moderate = more likely to be motivated by this type of work; interest and work preferences mostly align to position. 
+                Candidate is likely to have appropriate motivation and effort for role.</li>
+            <li>Strong = very likely to be motivated by this type of work; interest and work preferences highly align to position. Likely 
+                to put forth high effort and be highly motivated by this type of work</li>
+        </p>
+    </div>  
+    
+</div>
+<div class="row" > 
+    <div class="columnL">
+        <p class="scores">
+            <b>Personality fit = {{ person }}</b>
+            <ul><u>Personality Fit Guide:</u></ul>
+            <li>Weak = unlikely to have behavioral tendencies that align with position; likely lacks personality traits that contribute to job 
+                success and may be dissatisfied in this role.</li>
+            <li>Cautionary = less likely to have behavioral tendencies that align with position. Have few personality traits that will contribute 
+                to job success and may be dissatisfied in their role</li>
+            <li>Moderate = mostly have behavioral tendencies that align with position. Has some personality traits that will contribute to success 
+                and will likely be satisfied in their role</li>
+            <li>Strong = very likely to have behavioral tendencies that align with position and has a combination of personality traits that will 
+                contribute to success. Very likely to be satisfied in role</li>
+        </p>
+    </div>  
+    
+</div>
+
+ 
+<h3 class="header"><u>Interview questions</u></h2>
+    <ol>
+        <li>Tell me about the person you admire most?</li><br>
+        <li>Have you ever had conflict with a peer and how did you resolve it?</li><br>
+        <li>Have you ever had to choose the hard right over the easy wrong? If so, 
+            how did you navigate that decision?</li><br>
+        <li>What are you most proud of in your professional career and personal life?</li>
 
      
-    <h2 class="header">Recommended questions</h2>
+    <h3 class="header">OP Psych Recommended questions</h3>
     <section class="questions">
     <p><i>Weak component</i></p>
         {% for question in questionsW %}

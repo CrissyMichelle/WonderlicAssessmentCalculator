@@ -8,7 +8,7 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 debug = DebugToolbarExtension(app)
 
 category = ["Weak", "Cautionary", "Moderate", "Strong"]
-
+cogni_labels = ["Below Average", "Average", "Above Average"]
 
 depend_questions = {'STRONG': ['Tell me about a time when you overworked your team. What did you learn?', 'Tell us about a time you came across as too confident. What did you learn?'],
                     'WEAK':['Tell me about a time your lack of preparation or focus led to a failure. What did you learn?', 'Describe the biggest work problem you have encountered. How did you solve it?', 'Tell me about a time you were proactive on a mission and it had a significant impact.']}
@@ -31,35 +31,29 @@ def index():
                             question_bank_4S=social_questions['STRONG'], question_bank_4W=social_questions['WEAK'], 
                             question_bank_5S=openmind_questions['STRONG'], question_bank_5W=openmind_questions['WEAK'])
 
+
 @app.route('/generated', methods=["POST"])
 def handle_form():
     """Collect data from form"""
+    fname = request.form['first']
+    lname = request.form['last']
+    full_name = lname + ', ' + fname
 
-    score_list = []
+    cogni_score = request.form['cognitive']
+    cog_label = cog_avg(cogni_score)
+
     moto_score = request.form["motivation"]
-    score_list.append(moto_score)
-
     overP_score = request.form["overallP"]
-    score_list.append(overP_score)
-
     depend_score = request.form["depend"]
-    score_list.append(depend_score)
-
     stress_score = request.form["stress"]
-    score_list.append(stress_score)
-
     coop_score = request.form["cooperate"]
-    score_list.append(coop_score)
-
     soci_score = request.form["social"]
-    score_list.append(soci_score)
-
     open_score = request.form["openmind"]
-    score_list.append(open_score)
 
     """check for valid input and produce labels"""
     try:
         if valid_input(moto_score, depend_score, stress_score, coop_score, soci_score, open_score) == True:
+            
             moto_cat = label_score(moto_score)
             overP_cat = label_score(overP_score)
             dep_cat = label_score(depend_score)
@@ -68,14 +62,14 @@ def handle_form():
             soci_cat = label_score(soci_score)
             open_cat = label_score(open_score)
             """Put categorical labels data into session storage"""
-            session['labels'] = {'Motivation': [moto_cat, moto_score], 'Overall Personality': [overP_cat, overP_score], 'Dependability': [dep_cat, depend_score], 'Stress Tolerance': [stress_cat, stress_score], 
+            session['labels'] = {'Cognitive': [cogni_score, cog_label], 'Motivation': [moto_cat, moto_score], 'Overall Personality': [overP_cat, overP_score], 'Dependability': [dep_cat, depend_score], 'Stress Tolerance': [stress_cat, stress_score], 
                                  'Cooperation': [coop_cat, coop_score], 'Sociability': [soci_cat, soci_score], 'Open-Mindedness': [open_cat, open_score]}
             """Generate list of questions"""
             weakP = mins_ask_this([depend_score,stress_score,coop_score,soci_score,open_score])
             strongP = max_ask_this([depend_score,stress_score,coop_score,soci_score,open_score])
 
-            return render_template("generated.html", label_data=session['labels'], questionsW = weakP, questionsS = strongP, 
-                                   scores=score_list, question_bank_1S=depend_questions['STRONG'], question_bank_1W=depend_questions['WEAK'],
+            return render_template("generated.html", name=full_name, cognitive=cog_label, moto=moto_cat, person=overP_cat, label_data=session['labels'], questionsW = weakP, questionsS = strongP, 
+                            question_bank_1S=depend_questions['STRONG'], question_bank_1W=depend_questions['WEAK'],
                             question_bank_2S=stress_questions['STRONG'], question_bank_2W=stress_questions['WEAK'], 
                             question_bank_3S=cooperate_questions['STRONG'], question_bank_3W=cooperate_questions['WEAK'], 
                             question_bank_4S=social_questions['STRONG'], question_bank_4W=social_questions['WEAK'], 
@@ -98,6 +92,19 @@ def valid_input(*vals):
     except:
         flash("UH-OH. What you typed caused an error. Please refresh the page and try again. Only numbers from 0 to 100 will work!!")
         return redirect('/')
+
+def cog_avg(val):
+    try:
+        score = float(val)
+        if score <=94:
+            return cogni_labels[0]
+        elif score >=95 and score <= 113:
+            return cogni_labels[1]
+        else:
+            return cogni_labels[2]
+    except:
+        flash("Please type in a valid number.")
+        return None
 
 def label_score(val):
     try:
@@ -268,7 +275,7 @@ def strongP_questions2(string_list):
     quest = []    
     for arg in string_list:
         if arg == 'Sociability':
-            quest.append(question_bank['soc']['STRONG'][0])
+            quest.append(question_bank['soc']['STRONG'][2])
         elif arg == 'Nothing recommended':
             quest.append("nothing to see here")
     

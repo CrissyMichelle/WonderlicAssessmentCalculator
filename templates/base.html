@@ -9,7 +9,7 @@
 </head>
 <body>
     <div>
-        <h1 id="main">25ID, Lightning Labs - Wonderlic Assesment Assistant!
+        <h1 id="main">25ID, Lightning Labs - Won Assessment Assistant!
             <img src="static/LL_Logo.jpeg" 
             alt="25ID Lightning Labs Logo" class="beneath">
         </h1>
@@ -17,13 +17,20 @@
         
     </div>
     {% block content %}
-    <h2 class="header">Input Scores. Click for bb card stuff!</h2>
+    <h2 class="header">Input info. Click 'Generate'for Won bb Card!</h2>
     <section class="messages">
         {% for msg in get_flashed_messages() %}
         <div>{{ msg }}</div>
         {% endfor %}
     </section>
     <form action="/generated" method="POST">
+        <h3 class="header">Candidate Name</h3>
+        <label for="first">First Name </label><input type="text" placeholder="type in the Candidate's first name" name="first"><br>
+        <label for="last">Last Name </label><input type="text" placeholder="type in the Candidate's last name" name="last"><br> 
+       <hr>
+        <h3 class="header">Cognitive Score</h3>
+        <label for="cognitive">Cognitive Score </label><input type="text" placeholder="type in a number from 0 to 250" name="cognitive"><br>
+        <hr>
         <h3 class="header">Motivation</h3>
         <label for="motivation">Motivation Score </label><input type="text" placeholder="type in a number from 0 to 100" name="motivation"><br>
         <hr>
@@ -40,7 +47,11 @@
         <hr>
         <button type="submit">Generate</button>
     </form>
-    {% endblock %}
+    
+
+
+
+
     <h2 class="header">Question Bank</h2> 
     <section class="questionBank">
         <ul>Dependability (Conscientiousness)</ul>
@@ -89,5 +100,6 @@
             <li>{{ weak }}</li>
             {% endfor %}
     </section>
+    {% endblock %}
 </body>
 </html>
