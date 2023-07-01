@@ -1,10 +1,14 @@
 <!--This template inherits from the homepage-->
 {% extends 'base.html' %}
 {% block title %}Won bb Card{% endblock %}
-<!--Insert the newly converted amount into h2 here-->
+
 {% block content %}<h2 class="header">{{ name }}</h2>
-<h3 class="header"><u>Operational Psychologist Feedback</u></h2>
-    <input type="button" onclick="javascript:window.print();" value="Print to PDF"></input>
+<section class="messages">
+    {% for msg in get_flashed_messages() %}
+    <div>{{ msg }}</div>
+    {% endfor %}
+</section>
+
 <div class="row" > 
     <div class="columnL">
         <p class="scores">
@@ -74,4 +78,10 @@
         <p>{{ question }}</p>
         {% endfor %}
     </section>
+
+
+        <input type="button" onclick="javascript:
+
+            window.print();" value="Print to PDF">
+        </input>
 {% endblock %}

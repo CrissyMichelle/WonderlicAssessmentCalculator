@@ -17,7 +17,7 @@
         
     </div>
     {% block content %}
-    <h2 class="header">Input info. Click 'Generate'for Won bb Card!</h2>
+    <h2 class="header" id="test">Input info. Click 'Generate'for Won bb Card!</h2>
     <section class="messages">
         {% for msg in get_flashed_messages() %}
         <div>{{ msg }}</div>
@@ -25,27 +25,50 @@
     </section>
     <form action="/generated" method="POST">
         <h3 class="header">Candidate Name</h3>
-        <label for="first">First Name </label><input type="text" placeholder="type in the Candidate's first name" name="first"><br>
-        <label for="last">Last Name </label><input type="text" placeholder="type in the Candidate's last name" name="last"><br> 
+        <label for="first">First Name </label><input type="text" placeholder="type in the Candidate's first name" name="first" id="fName"><br>
+        <label for="last">Last Name </label><input type="text" placeholder="type in the Candidate's last name" name="last" id="lName"><br> 
        <hr>
         <h3 class="header">Cognitive Score</h3>
-        <label for="cognitive">Cognitive Score </label><input type="text" placeholder="type in a number from 0 to 250" name="cognitive"><br>
+        <label for="cognitive">Cognitive Score </label><input type="text" placeholder="type in a number from 0 to 250" name="cognitive" id="cogni"><br>
         <hr>
         <h3 class="header">Motivation</h3>
-        <label for="motivation">Motivation Score </label><input type="text" placeholder="type in a number from 0 to 100" name="motivation"><br>
+        <label for="motivation">Motivation Score </label><input type="text" placeholder="type in a number from 0 to 100" name="motivation" id="moto"><br>
         <hr>
         <h3 class="header">Overall Personality Score</h3>
-        <label for="overallP">Overall Personality Score </label><input type="text" placeholder="type in a number from 0 to 100" name="overallP"><br>
+        <label for="overallP">Overall Personality Score </label><input type="text" placeholder="type in a number from 0 to 100" name="overallP" id="oP"><br>
         <hr>
 
         <h3 class="header"><i id="subHead">Personality Component Scores</i></h3>
-        <label for="depend">Dependability* </label><input type="text" placeholder="type in a number from 0 to 100" name="depend"><br>
-        <label for="stress">Stress Tolerance* </label><input type="text" placeholder="type in a number from 0 to 100" name="stress"><br>
-        <label for="cooperate">Cooperation* </label><input type="text" placeholder="type in a number from 0 to 100" name="cooperate"><br>
-        <label for="social">Sociability* </label><input type="text" placeholder="type in a number from 0 to 100" name="social"><br>
-        <label for="openmind">Open-Mindedness* </label><input type="text" placeholder="type in a number from 0 to 100" name="openmind"><br>
+        <label for="depend">Dependability* </label><input type="text" placeholder="type in a number from 0 to 100" name="depend" id="dep"><br>
+        <label for="stress">Stress Tolerance* </label><input type="text" placeholder="type in a number from 0 to 100" name="stress" id="stress"><br>
+        <label for="cooperate">Cooperation* </label><input type="text" placeholder="type in a number from 0 to 100" name="cooperate" id="coop"><br>
+        <label for="social">Sociability* </label><input type="text" placeholder="type in a number from 0 to 100" name="social" id="soci"><br>
+        <label for="openmind">Open-Mindedness* </label><input type="text" placeholder="type in a number from 0 to 100" name="openmind" id="open"><br>
         <hr>
-        <button type="submit">Generate</button>
+        <button type="submit" onclick="javascript: 
+            var first=document.getElementById('fName').value;
+            var last=document.getElementById('lName').value;
+            var cognitive=document.getElementById('cogni').value;
+            var motivation=document.getElementById('moto').value;
+            var overallP=document.getElementById('oP').value;
+            var depend=document.getElementById('dep').value;
+            var stress=document.getElementById('stress').value;
+            var cooperate=document.getElementById('coop').value;
+            var social=document.getElementById('soci').value;
+            var openmind=document.getElementById('open').value;
+            
+            var text = `Name: ${last}, ${first} \nScores\nCognitive-${cognitive}\nMotivation-${motivation}\nOverall Personality-${overallP}\nDependability-${depend}\nStress Tolerance-${stress}\nCooperation-${cooperate}\nSociability-${social}\nOpen-Mindedness-${openmind}`;
+
+            alert(text);
+
+            ">
+                    Generate
+        </button>
+
+
+
+
+
     </form>
     
 

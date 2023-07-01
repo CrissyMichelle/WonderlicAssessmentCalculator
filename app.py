@@ -52,7 +52,8 @@ def handle_form():
 
     """check for valid input and produce labels"""
     try:
-        if valid_input(moto_score, depend_score, stress_score, coop_score, soci_score, open_score) == True:
+        score_list= [moto_score, depend_score, stress_score, coop_score, soci_score, open_score];
+        if valid_input(score_list) == True:
             
             moto_cat = label_score(moto_score)
             overP_cat = label_score(overP_score)
@@ -68,6 +69,7 @@ def handle_form():
             weakP = mins_ask_this([depend_score,stress_score,coop_score,soci_score,open_score])
             strongP = max_ask_this([depend_score,stress_score,coop_score,soci_score,open_score])
 
+            flash(f"You entered {full_name} and the following scores: Cognitive-{cogni_score}, Motivation-{moto_score}, Overall Personality-{overP_score}, Dependability-{depend_score}, Stress Tolerance-{stress_score}, Cooperation-{coop_score}, Sociability-{soci_score}, Open-Mindedness-{open_score}")
             return render_template("generated.html", name=full_name, cognitive=cog_label, moto=moto_cat, person=overP_cat, label_data=session['labels'], questionsW = weakP, questionsS = strongP, 
                             question_bank_1S=depend_questions['STRONG'], question_bank_1W=depend_questions['WEAK'],
                             question_bank_2S=stress_questions['STRONG'], question_bank_2W=stress_questions['WEAK'], 
@@ -80,17 +82,18 @@ def handle_form():
         flash("UH-OH. What you typed caused an error. Please refresh the page and try again. Only numbers from 0 to 100 will work!!")
         return redirect('/')
 
-def valid_input(*vals):
+def valid_input(vals):
     try:
         for val in vals:
-            score = float(val)
+            score = int(val)
             if score >= 0 and score <= 100:
                 return True
             else:
+                flash(f"You typed in {val}")
                 flash("Please type in a valid number. Only values from 0 to 100 will work!")
                 return False
     except:
-        flash("UH-OH. What you typed caused an error. Please refresh the page and try again. Only numbers from 0 to 100 will work!!")
+        flash("oops. What you typed caused an error. Please refresh the page and try again. Only numbers from 0 to 100 will work!!")
         return redirect('/')
 
 def cog_avg(val):
@@ -103,7 +106,7 @@ def cog_avg(val):
         else:
             return cogni_labels[2]
     except:
-        flash("Please type in a valid number.")
+        flash(f"{val} is an invalid entry for cognitive score. Please type in a valid number.")
         return None
 
 def label_score(val):
