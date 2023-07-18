@@ -1,4 +1,5 @@
 from flask import Flask, request, render_template, redirect, flash, session
+from markupsafe import Markup  # prevents HTML tags in string to not get autoescaped
 from flask_debugtoolbar import DebugToolbarExtension
 import requests
 
@@ -10,29 +11,35 @@ debug = DebugToolbarExtension(app)
 category = ["Weak", "Cautionary", "Moderate", "Strong"]
 cogni_labels = ["Below Average", "Average", "Above Average"]
 
-depend_questions = {'STRONG': ['Tell me about a time when you overworked your team. What did you learn?\n',
-                               'Tell us about a time you came across as too confident. What did you learn?\n'],
-                    'WEAK':['Tell me about a time your lack of preparation or focus led to a failure. What did you learn?\n',
-                            'Describe the biggest work problem you have encountered. How did you solve it?\n',
-                            'Tell me about a time you were proactive on a mission and it had a significant impact.\n']}
-stress_questions = {'STRONG': ['Tell me about a time when your team was overly stressed and you were not. How did you lead your team to success?\n',
-                               'Tell me about a time you had to complete a big task with inadequate resources. How did you complete it?\n'],
-                    'WEAK': ['Tell me about a time you were overwhelmed with a project and reached out for help. What happened?\n',
-                             'Tell me about a time you received difficult feedback. How did you utilize it?\n']}
-cooperate_questions = {'STRONG': ["Tell me about a time you should have pushed back on a superior's tasking and didn't. How did it impact those working under you?\n",
-                                  'Tell me about a time you gave a leader negative feedback.\n'],
-                       'WEAK': ['Tell me about a time you disagreed with your supervisor. How did you resolve it?\n',
-                                'Describe a time you came off as abrasive to others. How did that impact your ability to lead?\n']}
-social_questions = {'STRONG': ['Tell me about a time you were a poor listener, and it impacted your team. How did you adjust course?\n',
-                               'Describe a time you empathized with a Soldier and took their perspective into account.\n',
-                               'Tell me about a time you spoke “too soon”. What was the result?\n'],
-                    'WEAK': ['Describe a time you had to work with a difficult group of subordinates. How did you bring them together?\n',
-                             'Share a time you had one particularly difficult subordinate. How did you motivate them?\n']}
-openmind_questions = {'STRONG': ['Tell me about a time you came up with an initiative to change a process in your section. Did it work? How do you know others bought into your idea?\n',
-                                 'How do you know if your subordinates are open to new initiatives or your solutions to problems?\n'],
-                      'WEAK': ['Tell me about a time you lost sight of the big picture mission. What did you learn?\n',
-                               'Give a specific example of how you have helped create an environment where differences are valued, encouraged, and supported.\n',
-                               'Tell me about the most effective contribution you have made as part of a task group or special project.\n']}
+#Question banks
+depend_questions = {'STRONG': ["Strong Dependability: Tell me about a time when you overworked your team. What did you learn?\n"
+                               "Strong Dependability: Tell us about a time you came across as too confident. What did you learn?"],
+                    'WEAK': ["Weak Dependability: Tell me about a time your lack of preparation or focus led to a failure. What did you learn?\n"
+                            "Weak Dependability: Describe the biggest work problem you have encountered. How did you solve it?\n"
+                            "Weak Dependability: Tell me about a time you were proactive on a mission and it had a significant impact."]}
+
+stress_questions = {'STRONG': ["Strong Stress Tolerance: Tell me about a time when your team was overly stressed and you were not. How did you lead your team to success?\n"
+                               "Strong Stress Tolerance: Tell me about a time you had to complete a big task with inadequate resources. How did you complete it?"],
+                    'WEAK': ["Weak Stress Tolerance: Tell me about a time you were overwhelmed with a project and reached out for help. What happened?\n"
+                             "Weak Stress Tolerance: Tell me about a time you received difficult feedback. How did you utilize it?"]}
+
+cooperate_questions = {'STRONG': ["Strong Cooperation: Tell me about a time you should have pushed back on a superior's tasking and didn't. How did it impact those working under you?\n"
+                                  "Strong Cooperation: Tell me about a time you gave a leader negative feedback."],
+                       'WEAK': ["Weak Cooperation: Tell me about a time you disagreed with your supervisor. How did you resolve it?\n"
+                                "Weak Cooperation: Describe a time you came off as abrasive to others. How did that impact your ability to lead?"]}
+
+social_questions = {'STRONG': ["Strong Sociability: Tell me about a time you were a poor listener, and it impacted your team. How did you adjust course?\n"
+                               "Strong Sociability: Describe a time you empathized with a Soldier and took their perspective into account.\n"
+                               "Strong Sociability: Tell me about a time you spoke “too soon”. What was the result?"],
+                    'WEAK': ["Weak Sociability: Describe a time you had to work with a difficult group of subordinates. How did you bring them together?\n"
+                             "Weak Sociability: Share a time you had one particularly difficult subordinate. How did you motivate them?"]}
+
+openmind_questions = {'STRONG': ["Strong Open-Mindedness: Tell me about a time you came up with an initiative to change a process in your section. Did it work? How do you know others bought into your idea?\n"
+                                 "Strong Open-Mindedness: How do you know if your subordinates are open to new initiatives or your solutions to problems?"],
+                      'WEAK': ["Weak Open-Mindedness: Tell me about a time you lost sight of the big picture mission. What did you learn?\n"
+                               "Weak Open-Mindedness: Give a specific example of how you have helped create an environment where differences are valued, encouraged, and supported.\n"
+                               "Weak Open-Mindedness: Tell me about the most effective contribution you have made as part of a task group or special project."]}
+
 question_bank = {'dep': depend_questions, 'sts': stress_questions, 'cop': cooperate_questions, 'soc': social_questions, 'opm': openmind_questions}
 
 
@@ -85,17 +92,21 @@ def handle_form():
             weakP = mins_ask_this([depend_score, stress_score, coop_score, soci_score, open_score])
             strongP = max_ask_this([depend_score, stress_score, coop_score, soci_score, open_score])
 
-            flash(f"You entered {full_name} and the following scores:"
-                  f"\nCognitive-{cogni_score},"
-                  f"\nMotivation-{moto_score},"
-                  f"\nOverall Personality-{overP_score},"
-                  f"\nDependability-{depend_score},"
-                  f"\nStress Tolerance-{stress_score},"
-                  f"\nCooperation-{coop_score},"
-                  f"\nSociability-{soci_score},"
-                  f"\nOpen-Mindedness-{open_score}")
+            flash(
+                Markup(
+                f"Name: {full_name}<br>"
+                f"Cognitive: {cogni_score}<br>"
+                f"Motivation: {moto_score}<br>"
+                f"Overall Personality: {overP_score}<br>"
+                f"Dependability: {depend_score}<br>"
+                f"Stress Tolerance: {stress_score}<br>"
+                f"Cooperation: {coop_score}<br>"
+                f"Sociability: {soci_score}<br>"
+                f"Open-Mindedness: {open_score}"
+                )
+            )
 
-            return render_template("generated.html", name=full_name, cognitive=cog_label, moto=moto_cat, person=overP_cat, label_data=session['labels'], questionsW = weakP, questionsS = strongP,
+            return render_template("generated.html", name=full_name, cognitive=cog_label, moto=moto_cat, person=overP_cat, label_data=session['labels'], questionsW=weakP, questionsS=strongP,
                             question_bank_1S=depend_questions['STRONG'], question_bank_1W=depend_questions['WEAK'],
                             question_bank_2S=stress_questions['STRONG'], question_bank_2W=stress_questions['WEAK'],
                             question_bank_3S=cooperate_questions['STRONG'], question_bank_3W=cooperate_questions['WEAK'],

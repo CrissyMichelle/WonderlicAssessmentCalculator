@@ -70,13 +70,20 @@
     <h3 class="header">OP Psych Recommended questions</h3>
     <section class="questions">
     <p><i>Weak component</i></p>
-        {% for question in questionsW %}
-        <p>{{ question }}</p>
-        {% endfor %}
+    <textarea id="question_output_weak" rows="10" cols="160">
+{% for question in questionsW %}
+{{ question }}
+{% endfor %}
+    </textarea>
+
     <p><i>Strong component</i></p>
-        {% for question in questionsS %}
-        <p>{{ question }}</p>
-        {% endfor %}
+    <textarea id="question_output_strong" rows="10" cols="160">
+{% for question in questionsS %}
+{{ question }}
+{% endfor %}
+    </textarea>
+
+
     </section>
 
 
