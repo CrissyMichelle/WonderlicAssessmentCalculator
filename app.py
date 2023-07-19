@@ -9,38 +9,57 @@ app.config['DEBUG_TB_INTERCEPT_REDIRECTS'] = False
 debug = DebugToolbarExtension(app)
 
 category = ["Weak", "Cautionary", "Moderate", "Strong"]
-cogni_labels = ["Below Average", "Average", "Above Average"]
+cognitive_score_labels = ["Below Average", "Average", "Above Average"]
 
 # question banks
-question_bank_dependability = {'STRONG': ["Strong Dependability: Tell me about a time when you overworked your team. What did you learn?\n"
-                               "Strong Dependability: Tell us about a time you came across as too confident. What did you learn?"],
-                    'WEAK': ["Weak Dependability: Tell me about a time your lack of preparation or focus led to a failure. What did you learn?\n"
-                            "Weak Dependability: Describe the biggest work problem you have encountered. How did you solve it?\n"
-                            "Weak Dependability: Tell me about a time you were proactive on a mission and it had a significant impact."]}
+question_bank_dependability = {
+    'STRONG':
+        ["Strong Dependability: Tell me about a time when you overworked your team. What did you learn?\n"
+        "Strong Dependability: Tell us about a time you came across as too confident. What did you learn?"],
+    'WEAK':
+        ["Weak Dependability: Tell me about a time your lack of preparation or focus led to a failure. What did you learn?\n"
+        "Weak Dependability: Describe the biggest work problem you have encountered. How did you solve it?\n"
+        "Weak Dependability: Tell me about a time you were proactive on a mission and it had a significant impact."]}
 
-question_bank_stress_tolerance = {'STRONG': ["Strong Stress Tolerance: Tell me about a time when your team was overly stressed and you were not. How did you lead your team to success?\n"
-                               "Strong Stress Tolerance: Tell me about a time you had to complete a big task with inadequate resources. How did you complete it?"],
-                    'WEAK': ["Weak Stress Tolerance: Tell me about a time you were overwhelmed with a project and reached out for help. What happened?\n"
-                             "Weak Stress Tolerance: Tell me about a time you received difficult feedback. How did you utilize it?"]}
+question_bank_stress_tolerance = {
+    'STRONG':
+        ["Strong Stress Tolerance: Tell me about a time when your team was overly stressed and you were not. How did you lead your team to success?\n"
+        "Strong Stress Tolerance: Tell me about a time you had to complete a big task with inadequate resources. How did you complete it?"],
+    'WEAK':
+        ["Weak Stress Tolerance: Tell me about a time you were overwhelmed with a project and reached out for help. What happened?\n"
+        "Weak Stress Tolerance: Tell me about a time you received difficult feedback. How did you utilize it?"]}
 
-question_bank_cooperation = {'STRONG': ["Strong Cooperation: Tell me about a time you should have pushed back on a superior's tasking and didn't. How did it impact those working under you?\n"
-                                  "Strong Cooperation: Tell me about a time you gave a leader negative feedback."],
-                       'WEAK': ["Weak Cooperation: Tell me about a time you disagreed with your supervisor. How did you resolve it?\n"
-                                "Weak Cooperation: Describe a time you came off as abrasive to others. How did that impact your ability to lead?"]}
+question_bank_cooperation = {
+    'STRONG':
+        ["Strong Cooperation: Tell me about a time you should have pushed back on a superior's tasking and didn't. How did it impact those working under you?\n"
+        "Strong Cooperation: Tell me about a time you gave a leader negative feedback."],
+    'WEAK':
+        ["Weak Cooperation: Tell me about a time you disagreed with your supervisor. How did you resolve it?\n"
+        "Weak Cooperation: Describe a time you came off as abrasive to others. How did that impact your ability to lead?"]}
 
-question_bank_sociability = {'STRONG': ["Strong Sociability: Tell me about a time you were a poor listener, and it impacted your team. How did you adjust course?\n"
-                               "Strong Sociability: Describe a time you empathized with a Soldier and took their perspective into account.\n"
-                               "Strong Sociability: Tell me about a time you spoke “too soon”. What was the result?"],
-                    'WEAK': ["Weak Sociability: Describe a time you had to work with a difficult group of subordinates. How did you bring them together?\n"
-                             "Weak Sociability: Share a time you had one particularly difficult subordinate. How did you motivate them?"]}
+question_bank_sociability = {
+    'STRONG':
+        ["Strong Sociability: Tell me about a time you were a poor listener, and it impacted your team. How did you adjust course?\n"
+        "Strong Sociability: Describe a time you empathized with a Soldier and took their perspective into account.\n"
+        "Strong Sociability: Tell me about a time you spoke “too soon”. What was the result?"],
+    'WEAK': [
+        "Weak Sociability: Describe a time you had to work with a difficult group of subordinates. How did you bring them together?\n"
+        "Weak Sociability: Share a time you had one particularly difficult subordinate. How did you motivate them?"]}
 
-question_bank_open_mindedness = {'STRONG': ["Strong Open-Mindedness: Tell me about a time you came up with an initiative to change a process in your section. Did it work? How do you know others bought into your idea?\n"
-                                 "Strong Open-Mindedness: How do you know if your subordinates are open to new initiatives or your solutions to problems?"],
-                      'WEAK': ["Weak Open-Mindedness: Tell me about a time you lost sight of the big picture mission. What did you learn?\n"
-                               "Weak Open-Mindedness: Give a specific example of how you have helped create an environment where differences are valued, encouraged, and supported.\n"
-                               "Weak Open-Mindedness: Tell me about the most effective contribution you have made as part of a task group or special project."]}
+question_bank_open_mindedness = {
+    'STRONG':
+        ["Strong Open-Mindedness: Tell me about a time you came up with an initiative to change a process in your section. Did it work? How do you know others bought into your idea?\n"
+        "Strong Open-Mindedness: How do you know if your subordinates are open to new initiatives or your solutions to problems?"],
+    'WEAK':
+        ["Weak Open-Mindedness: Tell me about a time you lost sight of the big picture mission. What did you learn?\n"
+        "Weak Open-Mindedness: Give a specific example of how you have helped create an environment where differences are valued, encouraged, and supported.\n"
+        "Weak Open-Mindedness: Tell me about the most effective contribution you have made as part of a task group or special project."]}
 
-question_bank_all = {'dep': question_bank_dependability, 'sts': question_bank_stress_tolerance, 'cop': question_bank_cooperation, 'soc': question_bank_sociability, 'opm': question_bank_open_mindedness}
+question_bank_all = {'dependability': question_bank_dependability,
+                     'stress tolerance': question_bank_stress_tolerance,
+                     'cooperation': question_bank_cooperation,
+                     'sociability': question_bank_sociability,
+                     'open-mindedness': question_bank_open_mindedness}
 
 
 @app.route('/')
@@ -59,7 +78,7 @@ def handle_form():
     full_name = request.form['last'] + ', ' + request.form['first']
 
     score_cognitive = request.form['cognitive']
-    cog_label = cog_avg(score_cognitive)
+    cog_label = score_to_label_cognitive(score_cognitive)
 
     score_motivation = request.form["motivation"]
     score_overall_personality = request.form["overallP"]
@@ -72,7 +91,7 @@ def handle_form():
     """check for valid input and produce labels"""
     try:
         score_list = [score_motivation, score_dependability, score_stress_tolerance, score_cooperation, score_sociability, score_open_mindedness]
-        if valid_input(score_list) == True:
+        if valid_input(score_list):
 
             moto_cat = label_score(score_motivation)
             overP_cat = label_score(score_overall_personality)
@@ -83,8 +102,15 @@ def handle_form():
             open_cat = label_score(score_open_mindedness)
 
             """Put categorical labels data into session storage"""
-            session['labels'] = {'Cognitive': [score_cognitive, cog_label], 'Motivation': [moto_cat, score_motivation], 'Overall Personality': [overP_cat, score_overall_personality], 'Dependability': [dep_cat, score_dependability], 'Stress Tolerance': [stress_cat, score_stress_tolerance],
-                                 'Cooperation': [coop_cat, score_cooperation], 'Sociability': [soci_cat, score_sociability], 'Open-Mindedness': [open_cat, score_open_mindedness]}
+            session['labels'] =\
+                {'Cognitive': [score_cognitive, cog_label],
+                 'Motivation': [moto_cat, score_motivation],
+                 'Overall Personality': [overP_cat, score_overall_personality],
+                 'Dependability': [dep_cat, score_dependability],
+                 'Stress Tolerance': [stress_cat, score_stress_tolerance],
+                 'Cooperation': [coop_cat, score_cooperation],
+                 'Sociability': [soci_cat, score_sociability],
+                 'Open-Mindedness': [open_cat, score_open_mindedness]}
 
             """Generate list of questions"""
             weakP = mins_ask_this([score_dependability, score_stress_tolerance, score_cooperation, score_sociability, score_open_mindedness])
@@ -113,60 +139,65 @@ def handle_form():
         else:
             return redirect('/')
     except:
-        flash("UH-OH. What you typed caused an error. Please refresh the page and try again. Only numbers from 0 to 100 will work!!")
+        flash("Unknown error was encountered while handling form.")
         return redirect('/')
 
 
-def valid_input(vals):
+def valid_input(raw_scores):
     try:
-        for val in vals:
-            score = int(val)
-            if 0 <= score <= 100:
+        for raw_score in raw_scores:
+            score = int(raw_score)
+            if 0 <= int(score) <= 100:
                 return True
             else:
-                flash(f"You typed in {val}")
-                flash("Please type in a valid number. Only values from 0 to 100 will work!")
+                flash(f"You typed in {score}. Please enter a number between 0 and 100.")
                 return False
     except:
-        flash("oops. What you typed caused an error. Please refresh the page and try again. Only numbers from 0 to 100 will work!!")
+        flash("Unknown error was encountered while validating input.")
         return redirect('/')
 
 
-def cog_avg(val):
+def score_to_label_cognitive(raw_score):
     try:
-        score = float(val)
+        score = int(raw_score)
         if score <= 94:
-            return cogni_labels[0]  # Below Average
+            return cognitive_score_labels[0]  # Below Average
         elif 95 <= score <= 113:
-            return cogni_labels[1]  # Average
+            return cognitive_score_labels[1]  # Average
+        elif score >= 114:
+            return cognitive_score_labels[2]  # Above Average
         else:
-            return cogni_labels[2]  # Above Average
+            flash(f"{raw_score} is an invalid entry for cognitive score. Please enter a number between 0 and 250.")
+            return None
     except:
-        flash(f"{val} is an invalid entry for cognitive score. Please type in a valid number.")
+        flash("Unknown error was encountered while interpreting cognitive score.")
         return None
 
 
-def label_score(val):
+def label_score(raw_score):
     try:
-        score = float(val)
-        if score <=25:
+        score = int(raw_score)
+        if score <= 25:
             return category[0]  # weak
         elif 26 <= score <= 49:
             return category[1]  # cautionary
         elif 50 <= score <= 74:
             return category[2]  # moderate
-        else:
+        elif score >= 75:
             return category[3]  # strong
+        else:
+            flash(f"You typed in {score}. Please enter a number between 0 and 100.")
+            return None
     except:
-        flash("Please type in a valid number. Only values from 0 to 100 will work!")
+        flash("Unknown error was encountered while determining strengths and weaknesses of the Soldier.")
         return None
 
 
-def mins_ask_this(lst):
+def mins_ask_this(raw_scores):
     personality = ['Dependability', 'Stress Tolerance', 'Cooperation', 'Sociability', 'Open-Mindedness']
-    if len(lst) <= len(personality):
+    if len(raw_scores) <= len(personality):
         try:
-            key_val_pair = zip(personality, lst)
+            key_val_pair = zip(personality, raw_scores)
             quest_dict = dict(key_val_pair)
             min_trait = min_conditions(quest_dict)
             return weakP_questions(min_trait)
@@ -177,11 +208,11 @@ def mins_ask_this(lst):
         return None
 
 
-def max_ask_this(lst):
+def max_ask_this(raw_scores):
     personality = ['Dependability', 'Stress Tolerance', 'Cooperation', 'Sociability', 'Open-Mindedness']
-    if len(lst) <= len(personality):
+    if len(raw_scores) <= len(personality):
         try:
-            key_val_pair = zip(personality, lst)
+            key_val_pair = zip(personality, raw_scores)
             quest_dict = dict(key_val_pair)
             max_trait = max_conditions(quest_dict)
             return strongP_questions(max_trait)
@@ -197,7 +228,7 @@ def min_conditions(dict):
     minimum = min(dict, key=dict.get)
     traits = dict.items()
     sorts = sorted(traits, key=value_getter)
-    if int(dict[minimum]) <= 25 and int(sorts[1][1]) > 25:
+    if int(dict[minimum]) <= 25 < int(sorts[1][1]):
         traits_list.append(minimum)
         return traits_list
     elif int(dict[minimum]) <= 25 and int(sorts[1][1]) <=25:
@@ -239,41 +270,41 @@ def max_conditions(dict):
 
 
 def weakP_questions(string_list):
-    quest = []
+    questions = []
     for arg in string_list:
         if arg == 'Dependability':
-            quest.append(question_bank_all['dep']['WEAK'][0])
+            questions.append(question_bank_all['dependability']['WEAK'][0])
         elif arg == 'Stress Tolerance':
-            quest.append(question_bank_all['sts']['WEAK'][0])
+            questions.append(question_bank_all['stress tolerance']['WEAK'][0])
         elif arg == 'Cooperation':
-            quest.append(question_bank_all['cop']['WEAK'][0])
+            questions.append(question_bank_all['cooperation']['WEAK'][0])
         elif arg == 'Sociability':
-            quest.append(question_bank_all['soc']['WEAK'][0])
+            questions.append(question_bank_all['sociability']['WEAK'][0])
         elif arg == 'Open-Mindedness':
-            quest.append(question_bank_all['opm']['WEAK'][0])
+            questions.append(question_bank_all['open-mindedness']['WEAK'][0])
         elif arg == 'Nothing recommended':
-            quest.append("nothing to see here")
+            questions.append("nothing to see here")
 
-    return quest
+    return questions
 
 
 def strongP_questions(string_list):
-    quest = []
+    questions = []
     for arg in string_list:
         if arg == 'Dependability':
-            quest.append(question_bank_all['dep']['STRONG'][0])
+            questions.append(question_bank_all['dependability']['STRONG'][0])
         elif arg == 'Stress Tolerance':
-            quest.append(question_bank_all['sts']['STRONG'][0])
+            questions.append(question_bank_all['stress tolerance']['STRONG'][0])
         elif arg == 'Cooperation':
-            quest.append(question_bank_all['cop']['STRONG'][0])
+            questions.append(question_bank_all['cooperation']['STRONG'][0])
         elif arg == 'Sociability':
-            quest.append(question_bank_all['soc']['STRONG'][0])
+            questions.append(question_bank_all['sociability']['STRONG'][0])
         elif arg == 'Open-Mindedness':
-            quest.append(question_bank_all['opm']['STRONG'][0])
+            questions.append(question_bank_all['open-mindedness']['STRONG'][0])
         elif arg == 'Nothing recommended':
-            quest.append("nothing to see here")
+            questions.append("nothing to see here")
 
-    return quest
+    return questions
 
 # 1a)If a score <=25  question only if no other scores are <= 25
 # 1b) if a score is >=75  question, but only if no other scores are >= 75
