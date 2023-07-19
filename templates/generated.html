@@ -2,14 +2,13 @@
 {% extends 'base.html' %}
 {% block title %}Won BB Card{% endblock %}
 
-<h2 class="header">
-    CUI
-</h2>
-
-
 {% block content %}
+<button class="classification_banner">
+    <b>CUI</b>
+</button>
+
 <h2 class="header">
-    <img align="left"  src="static/LL_Logo.jpeg" alt="25ID Lightning Labs Logo" class="beneath" width="50" height="50">
+    <img align="left"  src="static/25ID_Logo.jpeg" alt="25ID Logo" class="beneath" width="50" height="50">
     <img align="right" src="static/LL_Logo.jpeg" alt="25ID Lightning Labs Logo" class="beneath" width="50" height="50">
 </h2>
 <h2 class="header">
@@ -75,18 +74,12 @@
                 <h3 class="header">OP Psych Recommended questions</h3>
                     <section class="questions">
                         <p id="paragraph_weak_component"><i>Weak component</i></p>
-                            <textarea class="question_list_textarea" id="question_output_weak">
-                                {% for question in questionsW %}
-                                {{ question }}
-                                {% endfor %}
-                            </textarea>
+                            <textarea class="question_list_textarea" id="question_output_weak">{% for question in questionsW %}{{ question }}
+{% endfor %}</textarea>
 
-                        <p id="paragraph_strong_component"><i>Strong component</i></p>
-                            <textarea class="question_list_textarea" id="question_output_strong">
-                                {% for question in questionsS %}
-                                {{ question }}
-                                {% endfor %}
-                            </textarea>
+                        <p id="paragraph_strong_component"><i>Strong component</i></p>    
+                        <textarea class="question_list_textarea" id="question_output_strong">{% for question in questionsS %}{{ question }}
+{% endfor %}</textarea>
                     </section>
 
                 <input type="button" value="Print to PDF" id="print_button" 
