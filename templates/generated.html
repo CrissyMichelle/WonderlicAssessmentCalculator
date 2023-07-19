@@ -2,13 +2,25 @@
 {% extends 'base.html' %}
 {% block title %}Won BB Card{% endblock %}
 
+<h2 class="header">
+    CUI
+</h2>
+
+
 {% block content %}
-<h2 class="header">{{ name }}</h2>
-    <section class="messages">
-        {% for msg in get_flashed_messages() %}
-        <div>{{ msg }}</div>
-        {% endfor %}
-    </section>
+<h2 class="header">
+    <img align="left"  src="static/LL_Logo.jpeg" alt="25ID Lightning Labs Logo" class="beneath" width="50" height="50">
+    <img align="right" src="static/LL_Logo.jpeg" alt="25ID Lightning Labs Logo" class="beneath" width="50" height="50">
+</h2>
+<h2 class="header">
+    {{ name }}
+</h2>
+
+<section class="messages" id="flash_message">
+    {% for msg in get_flashed_messages() %}
+    <div>{{ msg }}</div>
+    {% endfor %}
+</section>
 <div class="column">
     <div class="row">
         <div class="row"> 
@@ -62,14 +74,14 @@
             
                 <h3 class="header">OP Psych Recommended questions</h3>
                     <section class="questions">
-                        <p><i>Weak component</i></p>
+                        <p id="paragraph_weak_component"><i>Weak component</i></p>
                             <textarea class="question_list_textarea" id="question_output_weak">
                                 {% for question in questionsW %}
                                 {{ question }}
                                 {% endfor %}
                             </textarea>
 
-                        <p><i>Strong component</i></p>
+                        <p id="paragraph_strong_component"><i>Strong component</i></p>
                             <textarea class="question_list_textarea" id="question_output_strong">
                                 {% for question in questionsS %}
                                 {{ question }}
@@ -77,8 +89,14 @@
                             </textarea>
                     </section>
 
-                <input type="button" onclick="javascript:
-                    window.print();" value="Print to PDF">
+                <input type="button" value="Print to PDF" id="print_button" 
+                    onclick="javascript:
+                        document.getElementById('print_button').remove();
+                        document.getElementById('lightning_labs_header').remove();
+                        document.getElementById('paragraph_weak_component').remove();
+                        document.getElementById('paragraph_strong_component').remove();
+                        document.getElementById('flash_message').remove();
+                        window.print();">
                 </input>
         </h3>
     </div>
