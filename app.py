@@ -1,7 +1,6 @@
 from flask import Flask, request, render_template, redirect, flash, session
 from markupsafe import Markup  # prevents HTML tags in string to not get autoescaped
 from flask_debugtoolbar import DebugToolbarExtension
-import requests
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = "123-456"
@@ -15,45 +14,51 @@ cognitive_score_labels = ["Below Average", "Average", "Above Average"]
 question_bank_dependability = {
     'STRONG':
         ["Strong Dependability: Tell me about a time when you overworked your team. What did you learn?\n"
-        "Strong Dependability: Tell us about a time you came across as too confident. What did you learn?"],
+         "Strong Dependability: Tell us about a time you came across as too confident. What did you learn?"],
     'WEAK':
-        ["Weak Dependability: Tell me about a time your lack of preparation or focus led to a failure. What did you learn?\n"
-        "Weak Dependability: Describe the biggest work problem you have encountered. How did you solve it?\n"
-        "Weak Dependability: Tell me about a time you were proactive on a mission and it had a significant impact."]}
+        [
+            "Weak Dependability: Tell me about a time your lack of preparation or focus led to a failure. What did you learn?\n"
+            "Weak Dependability: Describe the biggest work problem you have encountered. How did you solve it?\n"
+            "Weak Dependability: Tell me about a time you were proactive on a mission and it had a significant impact."]}
 
 question_bank_stress_tolerance = {
     'STRONG':
-        ["Strong Stress Tolerance: Tell me about a time when your team was overly stressed and you were not. How did you lead your team to success?\n"
-        "Strong Stress Tolerance: Tell me about a time you had to complete a big task with inadequate resources. How did you complete it?"],
+        [
+            "Strong Stress Tolerance: Tell me about a time when your team was overly stressed and you were not. How did you lead your team to success?\n"
+            "Strong Stress Tolerance: Tell me about a time you had to complete a big task with inadequate resources. How did you complete it?"],
     'WEAK':
-        ["Weak Stress Tolerance: Tell me about a time you were overwhelmed with a project and reached out for help. What happened?\n"
-        "Weak Stress Tolerance: Tell me about a time you received difficult feedback. How did you utilize it?"]}
+        [
+            "Weak Stress Tolerance: Tell me about a time you were overwhelmed with a project and reached out for help. What happened?\n"
+            "Weak Stress Tolerance: Tell me about a time you received difficult feedback. How did you utilize it?"]}
 
 question_bank_cooperation = {
     'STRONG':
-        ["Strong Cooperation: Tell me about a time you should have pushed back on a superior's tasking and didn't. How did it impact those working under you?\n"
-        "Strong Cooperation: Tell me about a time you gave a leader negative feedback."],
+        [
+            "Strong Cooperation: Tell me about a time you should have pushed back on a superior's tasking and didn't. How did it impact those working under you?\n"
+            "Strong Cooperation: Tell me about a time you gave a leader negative feedback."],
     'WEAK':
         ["Weak Cooperation: Tell me about a time you disagreed with your supervisor. How did you resolve it?\n"
-        "Weak Cooperation: Describe a time you came off as abrasive to others. How did that impact your ability to lead?"]}
+         "Weak Cooperation: Describe a time you came off as abrasive to others. How did that impact your ability to lead?"]}
 
 question_bank_sociability = {
     'STRONG':
-        ["Strong Sociability: Tell me about a time you were a poor listener, and it impacted your team. How did you adjust course?\n"
-        "Strong Sociability: Describe a time you empathized with a Soldier and took their perspective into account.\n"
-        "Strong Sociability: Tell me about a time you spoke “too soon”. What was the result?"],
+        [
+            "Strong Sociability: Tell me about a time you were a poor listener, and it impacted your team. How did you adjust course?\n"
+            "Strong Sociability: Describe a time you empathized with a Soldier and took their perspective into account.\n"
+            "Strong Sociability: Tell me about a time you spoke “too soon”. What was the result?"],
     'WEAK': [
         "Weak Sociability: Describe a time you had to work with a difficult group of subordinates. How did you bring them together?\n"
         "Weak Sociability: Share a time you had one particularly difficult subordinate. How did you motivate them?"]}
 
 question_bank_open_mindedness = {
     'STRONG':
-        ["Strong Open-Mindedness: Tell me about a time you came up with an initiative to change a process in your section. Did it work? How do you know others bought into your idea?\n"
-        "Strong Open-Mindedness: How do you know if your subordinates are open to new initiatives or your solutions to problems?"],
+        [
+            "Strong Open-Mindedness: Tell me about a time you came up with an initiative to change a process in your section. Did it work? How do you know others bought into your idea?\n"
+            "Strong Open-Mindedness: How do you know if your subordinates are open to new initiatives or your solutions to problems?"],
     'WEAK':
         ["Weak Open-Mindedness: Tell me about a time you lost sight of the big picture mission. What did you learn?\n"
-        "Weak Open-Mindedness: Give a specific example of how you have helped create an environment where differences are valued, encouraged, and supported.\n"
-        "Weak Open-Mindedness: Tell me about the most effective contribution you have made as part of a task group or special project."]}
+         "Weak Open-Mindedness: Give a specific example of how you have helped create an environment where differences are valued, encouraged, and supported.\n"
+         "Weak Open-Mindedness: Tell me about the most effective contribution you have made as part of a task group or special project."]}
 
 question_bank_all = {'dependability': question_bank_dependability,
                      'stress tolerance': question_bank_stress_tolerance,
@@ -65,11 +70,16 @@ question_bank_all = {'dependability': question_bank_dependability,
 @app.route('/')
 def index():
     """Show home page"""
-    return render_template("base.html", question_bank_1S=question_bank_dependability['STRONG'], question_bank_1W=question_bank_dependability['WEAK'],
-                           question_bank_2S=question_bank_stress_tolerance['STRONG'], question_bank_2W=question_bank_stress_tolerance['WEAK'],
-                           question_bank_3S=question_bank_cooperation['STRONG'], question_bank_3W=question_bank_cooperation['WEAK'],
-                           question_bank_4S=question_bank_sociability['STRONG'], question_bank_4W=question_bank_sociability['WEAK'],
-                           question_bank_5S=question_bank_open_mindedness['STRONG'], question_bank_5W=question_bank_open_mindedness['WEAK'])
+    return render_template("base.html", question_bank_1S=question_bank_dependability['STRONG'],
+                           question_bank_1W=question_bank_dependability['WEAK'],
+                           question_bank_2S=question_bank_stress_tolerance['STRONG'],
+                           question_bank_2W=question_bank_stress_tolerance['WEAK'],
+                           question_bank_3S=question_bank_cooperation['STRONG'],
+                           question_bank_3W=question_bank_cooperation['WEAK'],
+                           question_bank_4S=question_bank_sociability['STRONG'],
+                           question_bank_4W=question_bank_sociability['WEAK'],
+                           question_bank_5S=question_bank_open_mindedness['STRONG'],
+                           question_bank_5W=question_bank_open_mindedness['WEAK'])
 
 
 @app.route('/generated', methods=["POST"])
@@ -78,7 +88,7 @@ def handle_form():
     full_name = request.form['last'] + ', ' + request.form['first']
 
     score_cognitive = request.form['cognitive']
-    cog_label = score_to_label_cognitive(score_cognitive)
+    label_cognitive = score_to_label_cognitive(score_cognitive)
 
     score_motivation = request.form["motivation"]
     score_overall_personality = request.form["overallP"]
@@ -90,32 +100,42 @@ def handle_form():
 
     """check for valid input and produce labels"""
     try:
-        score_list = [score_motivation, score_dependability, score_stress_tolerance, score_cooperation, score_sociability, score_open_mindedness]
-        if valid_input(score_list):
+        score_list = \
+            [score_motivation,
+             score_dependability,
+             score_stress_tolerance,
+             score_cooperation,
+             score_sociability,
+             score_open_mindedness]
 
-            moto_cat = label_score(score_motivation)
-            overP_cat = label_score(score_overall_personality)
-            dep_cat = label_score(score_dependability)
-            stress_cat = label_score(score_stress_tolerance)
-            coop_cat = label_score(score_cooperation)
-            soci_cat = label_score(score_sociability)
-            open_cat = label_score(score_open_mindedness)
+        if input_valid(score_list):
+
+            label_motivation = label_score(score_motivation)
+            label_overall_personality = label_score(score_overall_personality)
+            label_dependability = label_score(score_dependability)
+            label_stress_tolerance = label_score(score_stress_tolerance)
+            label_cooperation = label_score(score_cooperation)
+            label_sociability = label_score(score_sociability)
+            label_open_mindedness = label_score(score_open_mindedness)
 
             """Put categorical labels data into session storage"""
-            session['labels'] =\
-                {'Cognitive': [score_cognitive, cog_label],
-                 'Motivation': [moto_cat, score_motivation],
-                 'Overall Personality': [overP_cat, score_overall_personality],
-                 'Dependability': [dep_cat, score_dependability],
-                 'Stress Tolerance': [stress_cat, score_stress_tolerance],
-                 'Cooperation': [coop_cat, score_cooperation],
-                 'Sociability': [soci_cat, score_sociability],
-                 'Open-Mindedness': [open_cat, score_open_mindedness]}
+            session['labels'] = \
+                {'Cognitive': [score_cognitive, label_cognitive],
+                 'Motivation': [label_motivation, score_motivation],
+                 'Overall Personality': [label_overall_personality, score_overall_personality],
+                 'Dependability': [label_dependability, score_dependability],
+                 'Stress Tolerance': [label_stress_tolerance, score_stress_tolerance],
+                 'Cooperation': [label_cooperation, score_cooperation],
+                 'Sociability': [label_sociability, score_sociability],
+                 'Open-Mindedness': [label_open_mindedness, score_open_mindedness]}
 
             """Generate list of questions"""
-            weakP = mins_ask_this([score_dependability, score_stress_tolerance, score_cooperation, score_sociability, score_open_mindedness])
-            strongP = max_ask_this([score_dependability, score_stress_tolerance, score_cooperation, score_sociability, score_open_mindedness])
+            weakP = mins_ask_this([score_dependability, score_stress_tolerance, score_cooperation, score_sociability,
+                                   score_open_mindedness])
+            strongP = max_ask_this([score_dependability, score_stress_tolerance, score_cooperation, score_sociability,
+                                    score_open_mindedness])
 
+            # Creates flash message of all raw scores
             flash(
                 Markup(
                     f"Name: {full_name}<br>"
@@ -130,12 +150,19 @@ def handle_form():
                 )
             )
 
-            return render_template("generated.html", name=full_name, cognitive=cog_label, moto=moto_cat, person=overP_cat, label_data=session['labels'], questionsW=weakP, questionsS=strongP,
-                                   question_bank_1S=question_bank_dependability['STRONG'], question_bank_1W=question_bank_dependability['WEAK'],
-                                   question_bank_2S=question_bank_stress_tolerance['STRONG'], question_bank_2W=question_bank_stress_tolerance['WEAK'],
-                                   question_bank_3S=question_bank_cooperation['STRONG'], question_bank_3W=question_bank_cooperation['WEAK'],
-                                   question_bank_4S=question_bank_sociability['STRONG'], question_bank_4W=question_bank_sociability['WEAK'],
-                                   question_bank_5S=question_bank_open_mindedness['STRONG'], question_bank_5W=question_bank_open_mindedness['WEAK'])
+            return render_template("generated.html", name=full_name, cognitive=label_cognitive, moto=label_motivation,
+                                   person=label_overall_personality, label_data=session['labels'], questionsW=weakP,
+                                   questionsS=strongP,
+                                   question_bank_1S=question_bank_dependability['STRONG'],
+                                   question_bank_1W=question_bank_dependability['WEAK'],
+                                   question_bank_2S=question_bank_stress_tolerance['STRONG'],
+                                   question_bank_2W=question_bank_stress_tolerance['WEAK'],
+                                   question_bank_3S=question_bank_cooperation['STRONG'],
+                                   question_bank_3W=question_bank_cooperation['WEAK'],
+                                   question_bank_4S=question_bank_sociability['STRONG'],
+                                   question_bank_4W=question_bank_sociability['WEAK'],
+                                   question_bank_5S=question_bank_open_mindedness['STRONG'],
+                                   question_bank_5W=question_bank_open_mindedness['WEAK'])
         else:
             return redirect('/')
     except:
@@ -143,7 +170,7 @@ def handle_form():
         return redirect('/')
 
 
-def valid_input(raw_scores):
+def input_valid(raw_scores):
     try:
         for raw_score in raw_scores:
             score = int(raw_score)
@@ -231,7 +258,7 @@ def min_conditions(dict):
     if int(dict[minimum]) <= 25 < int(sorts[1][1]):
         traits_list.append(minimum)
         return traits_list
-    elif int(dict[minimum]) <= 25 and int(sorts[1][1]) <=25:
+    elif int(dict[minimum]) <= 25 and int(sorts[1][1]) <= 25:
         traits_list.append(minimum)
         traits_list.append(sorts[1][0])
         return traits_list
