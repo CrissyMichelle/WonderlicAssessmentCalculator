@@ -12,59 +12,54 @@ cognitive_score_labels = ["Below Average", "Average", "Above Average"]
 
 # question banks
 question_bank_dependability = {
-    'STRONG':
-        ["Strong Dependability: Tell me about a time when you overworked your team. What did you learn?\n"
-         "Strong Dependability: Tell us about a time you came across as too confident. What did you learn?"],
-    'WEAK':
-        [
-            "Weak Dependability: Tell me about a time your lack of preparation or focus led to a failure. What did you learn?\n"
-            "Weak Dependability: Describe the biggest work problem you have encountered. How did you solve it?\n"
-            "Weak Dependability: Tell me about a time you were proactive on a mission and it had a significant impact."]}
+    'STRONG': [
+        "Strong Dependability: Tell me about a time when you overworked your team. What did you learn?\n"
+        "Strong Dependability: Tell us about a time you came across as too confident. What did you learn?"],
+    'WEAK': [
+        "Weak Dependability: Tell me about a time your lack of preparation or focus led to a failure. What did you learn?\n"
+        "Weak Dependability: Describe the biggest work problem you have encountered. How did you solve it?\n"
+        "Weak Dependability: Tell me about a time you were proactive on a mission and it had a significant impact."]}
 
 question_bank_stress_tolerance = {
-    'STRONG':
-        [
-            "Strong Stress Tolerance: Tell me about a time when your team was overly stressed and you were not. How did you lead your team to success?\n"
-            "Strong Stress Tolerance: Tell me about a time you had to complete a big task with inadequate resources. How did you complete it?"],
-    'WEAK':
-        [
-            "Weak Stress Tolerance: Tell me about a time you were overwhelmed with a project and reached out for help. What happened?\n"
-            "Weak Stress Tolerance: Tell me about a time you received difficult feedback. How did you utilize it?"]}
+    'STRONG': [
+        "Strong Stress Tolerance: Tell me about a time when your team was overly stressed and you were not. How did you lead your team to success?\n"
+        "Strong Stress Tolerance: Tell me about a time you had to complete a big task with inadequate resources. How did you complete it?"],
+    'WEAK': [
+        "Weak Stress Tolerance: Tell me about a time you were overwhelmed with a project and reached out for help. What happened?\n"
+        "Weak Stress Tolerance: Tell me about a time you received difficult feedback. How did you utilize it?"]}
 
 question_bank_cooperation = {
-    'STRONG':
-        [
-            "Strong Cooperation: Tell me about a time you should have pushed back on a superior's tasking and didn't. How did it impact those working under you?\n"
-            "Strong Cooperation: Tell me about a time you gave a leader negative feedback."],
-    'WEAK':
-        ["Weak Cooperation: Tell me about a time you disagreed with your supervisor. How did you resolve it?\n"
-         "Weak Cooperation: Describe a time you came off as abrasive to others. How did that impact your ability to lead?"]}
+    'STRONG': [
+        "Strong Cooperation: Tell me about a time you should have pushed back on a superior's tasking and didn't. How did it impact those working under you?\n"
+        "Strong Cooperation: Tell me about a time you gave a leader negative feedback."],
+    'WEAK': [
+        "Weak Cooperation: Tell me about a time you disagreed with your supervisor. How did you resolve it?\n"
+        "Weak Cooperation: Describe a time you came off as abrasive to others. How did that impact your ability to lead?"]}
 
 question_bank_sociability = {
-    'STRONG':
-        [
-            "Strong Sociability: Tell me about a time you were a poor listener, and it impacted your team. How did you adjust course?\n"
-            "Strong Sociability: Describe a time you empathized with a Soldier and took their perspective into account.\n"
-            "Strong Sociability: Tell me about a time you spoke “too soon”. What was the result?"],
+    'STRONG': [
+        "Strong Sociability: Tell me about a time you were a poor listener, and it impacted your team. How did you adjust course?\n"
+        "Strong Sociability: Describe a time you empathized with a Soldier and took their perspective into account.\n"
+        "Strong Sociability: Tell me about a time you spoke “too soon”. What was the result?"],
     'WEAK': [
         "Weak Sociability: Describe a time you had to work with a difficult group of subordinates. How did you bring them together?\n"
         "Weak Sociability: Share a time you had one particularly difficult subordinate. How did you motivate them?"]}
 
 question_bank_open_mindedness = {
-    'STRONG':
-        [
-            "Strong Open-Mindedness: Tell me about a time you came up with an initiative to change a process in your section. Did it work? How do you know others bought into your idea?\n"
-            "Strong Open-Mindedness: How do you know if your subordinates are open to new initiatives or your solutions to problems?"],
-    'WEAK':
-        ["Weak Open-Mindedness: Tell me about a time you lost sight of the big picture mission. What did you learn?\n"
-         "Weak Open-Mindedness: Give a specific example of how you have helped create an environment where differences are valued, encouraged, and supported.\n"
-         "Weak Open-Mindedness: Tell me about the most effective contribution you have made as part of a task group or special project."]}
+    'STRONG': [
+        "Strong Open-Mindedness: Tell me about a time you came up with an initiative to change a process in your section. Did it work? How do you know others bought into your idea?\n"
+        "Strong Open-Mindedness: How do you know if your subordinates are open to new initiatives or your solutions to problems?"],
+    'WEAK': [
+        "Weak Open-Mindedness: Tell me about a time you lost sight of the big picture mission. What did you learn?\n"
+        "Weak Open-Mindedness: Give a specific example of how you have helped create an environment where differences are valued, encouraged, and supported.\n"
+        "Weak Open-Mindedness: Tell me about the most effective contribution you have made as part of a task group or special project."]}
 
-question_bank_all = {'dependability': question_bank_dependability,
-                     'stress tolerance': question_bank_stress_tolerance,
-                     'cooperation': question_bank_cooperation,
-                     'sociability': question_bank_sociability,
-                     'open-mindedness': question_bank_open_mindedness}
+question_bank_all = {
+    'dependability': question_bank_dependability,
+    'stress tolerance': question_bank_stress_tolerance,
+    'cooperation': question_bank_cooperation,
+    'sociability': question_bank_sociability,
+    'open-mindedness': question_bank_open_mindedness}
 
 
 @app.route('/')
@@ -135,7 +130,7 @@ def handle_form():
             strongP = max_ask_this([score_dependability, score_stress_tolerance, score_cooperation, score_sociability,
                                     score_open_mindedness])
 
-            # Creates flash message of all raw scores
+            # Create a flash message with all raw scores
             flash(
                 Markup(
                     f"Name: {full_name}<br>"
@@ -231,7 +226,7 @@ def mins_ask_this(raw_scores):
         except:
             return flash("Uh-oh. Did you forget to type a score into every Personality field?")
     else:
-        flash("Please type in a valid number into each of the personality fields.  Thanks!")
+        flash("Please type in a valid number into each of the personality fields. Thanks!")
         return None
 
 
@@ -246,7 +241,7 @@ def max_ask_this(raw_scores):
         except:
             return flash("Uh-oh. Did you forget to type a score into every Personality field?")
     else:
-        flash("Please type in a valid number into each of the personality fields.  Thanks!")
+        flash("Please type in a valid number into each of the personality fields. Thanks!")
         return None
 
 
