@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Sort and Question{% endblock %}</title>
+    <title>{% block title %}Wonderlic Assessment Assistant{% endblock %}</title>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway|ZCOOL+QingKe+HuangYou">
     <link rel="stylesheet" href="static/style.css" type="text/css">
 </head>
 <body>
     
     <div id="lightning_labs_header">
-        <h1 id="main">25ID, Lightning Labs - Won Assessment Assistant!
+        <h1 id="main">25ID, Lightning Labs - Wonderlic Assessment Assistant!
             <img src="static/LL_Logo.jpeg" 
             alt="25ID Lightning Labs Logo" class="beneath">
         </h1>
@@ -25,25 +25,25 @@
     </section>
     <form action="/generated" method="POST">
         <h3 class="header">Candidate Name</h3>
-        <label for="first">First Name </label><input type="text" placeholder="type in the Candidate's first name" name="first" id="fName"><br>
-        <label for="last">Last Name </label><input type="text" placeholder="type in the Candidate's last name" name="last" id="lName"><br> 
+        <label for="first">First Name </label><input type="text" placeholder="Type in the Candidate's first name" name="first" id="fName"><br>
+        <label for="last">Last Name </label><input type="text" placeholder="Type in the Candidate's last name" name="last" id="lName"><br> 
        <hr>
         <h3 class="header">Cognitive Score</h3>
-        <label for="cognitive">Cognitive Score </label><input type="text" placeholder="type in a number from 0 to 250" name="cognitive" id="cogni"><br>
+        <label for="cognitive">Cognitive Score </label><input type="text" placeholder="Type in a number from 0 to 250" name="cognitive" id="cogni"><br>
         <hr>
         <h3 class="header">Motivation</h3>
-        <label for="motivation">Motivation Score </label><input type="text" placeholder="type in a number from 0 to 100" name="motivation" id="moto"><br>
+        <label for="motivation">Motivation Score </label><input type="text" placeholder="Type in a number from 0 to 100" name="motivation" id="moto"><br>
         <hr>
         <h3 class="header">Overall Personality Score</h3>
-        <label for="overallP">Overall Personality Score </label><input type="text" placeholder="type in a number from 0 to 100" name="overallP" id="oP"><br>
+        <label for="overallP">Overall Personality Score </label><input type="text" placeholder="Type in a number from 0 to 100" name="overallP" id="oP"><br>
         <hr>
 
         <h3 class="header"><i id="subHead">Personality Component Scores</i></h3>
-        <label for="depend">Dependability* </label><input type="text" placeholder="type in a number from 0 to 100" name="depend" id="dep"><br>
-        <label for="stress">Stress Tolerance* </label><input type="text" placeholder="type in a number from 0 to 100" name="stress" id="stress"><br>
-        <label for="cooperate">Cooperation* </label><input type="text" placeholder="type in a number from 0 to 100" name="cooperate" id="coop"><br>
-        <label for="social">Sociability* </label><input type="text" placeholder="type in a number from 0 to 100" name="social" id="soci"><br>
-        <label for="openmind">Open-Mindedness* </label><input type="text" placeholder="type in a number from 0 to 100" name="openmind" id="open"><br>
+        <label for="depend">Dependability* </label><input type="text" placeholder="Type in a number from 0 to 100" name="depend" id="dep"><br>
+        <label for="stress">Stress Tolerance* </label><input type="text" placeholder="Type in a number from 0 to 100" name="stress" id="stress"><br>
+        <label for="cooperate">Cooperation* </label><input type="text" placeholder="Type in a number from 0 to 100" name="cooperate" id="coop"><br>
+        <label for="social">Sociability* </label><input type="text" placeholder="Type in a number from 0 to 100" name="social" id="soci"><br>
+        <label for="openmind">Open-Mindedness* </label><input type="text" placeholder="Type in a number from 0 to 100" name="openmind" id="open"><br>
         <hr>
         <button type="submit" onclick="javascript: 
             var first=document.getElementById('fName').value;
