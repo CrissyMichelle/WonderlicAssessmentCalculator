@@ -328,6 +328,10 @@ def strongP_questions(string_list):
 
     return questions
 
+# Run app
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
+
 # 1a)If a score <=25  question only if no other scores are <= 25
 # 1b) if a score is >=75  question, but only if no other scores are >= 75
 # 1c) if score[i] <= 25 is min and score[j] >=75 is max  two questions
