@@ -1,0 +1,3 @@
+# ignore unimportant directories
+/.idea
+/__pycache__
